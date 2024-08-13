@@ -1,85 +1,85 @@
-// #include<iostream>
-// #include<vector>
-// #include<string.h>
-// #include<stack>
-// #include<queue>
-// using namespace std;
+#include<iostream>
+#include<vector>
+#include<string.h>
+#include<stack>
+#include<queue>
+using namespace std;
 
-// void reverseQueue(queue<int>&q){
-//     stack<int> st;
-//     //  add all element of queue in a stack 
-//     while(!q.empty()){
-//         int element=q.front();
-//         q.pop();
+void reverseQueue(queue<int>&q){
+    stack<int> st;
+    //  add all element of queue in a stack 
+    while(!q.empty()){
+        int element=q.front();
+        q.pop();
 
-//         st.push(element);
+        st.push(element);
 
-//     }
+    }
 
-//     // add all element from stack into queue
-//     while(!st.empty()){
-//         int element=st.top();
-//         q.push(element);
-//         st.pop();
-//     }
-
-
-// }
-
-// void reverseQueueRecursion(queue<int> & q){
-//     // BC
-//     if(q.empty()){
-//         return;
-
-//     }
-
-//     int temp=q.front();
-//     q.pop();
+    // add all element from stack into queue
+    while(!st.empty()){
+        int element=st.top();
+        q.push(element);
+        st.pop();
+    }
 
 
-//     // RC
-//     reverseQueueRecursion(q);
+}
 
-//     // BT
-//     q.push(temp);
+void reverseQueueRecursion(queue<int> & q){
+    // BC
+    if(q.empty()){
+        return;
+
+    }
+
+    int temp=q.front();
+    q.pop();
+
+
+    // RC
+    reverseQueueRecursion(q);
+
+    // BT
+    q.push(temp);
 
 
     
 
-// }
+}
 
 
-// int main() {
+int main() {
 
-//     // #1 approch : push in stack and pop from stack 
-//     // TC: o(n); 
-//     // SC: 0(n);
+    // #1 approch : push in stack and pop from stack 
+    // TC: o(n); 
+    // SC: 0(n);
 
-//     // #2 using recursion 
+    // #2 using recursion 
 
-//     queue<int> q;
+    queue<int> q;
     
 
-//     q.push(3);
-//     q.push(6);
-//     q.push(9);
-//     q.push(8);
-//     q.push(2);
+    q.push(3);
+    q.push(6);
+    q.push(9);
+    q.push(8);
+    q.push(2);
 
-//     reverseQueueRecursion(q);
+    reverseQueueRecursion(q);
 
-// //    printing queue
-// cout<< "printing queue"<<endl; 
+//    printing queue
+cout<< "printing queue"<<endl; 
 
-//     while(!q.empty()){
-//         cout<< q.front()<<" ";
-//         q.pop();
-//     }
-//     cout<<endl;
+    while(!q.empty()){
+        cout<< q.front()<<" ";
+        q.pop();
+    }
+    cout<<endl;
 
 
-//  return 0;
-// }
+ return 0;
+}
 
 
 // Question 2 reverse k element in a queue;
