@@ -87,7 +87,7 @@ int main() {
     }
 
     // store this answer 
-    ans.push_back(nums[dq.front()]);
+    ans.push_back(nums[dq.front( )]);
 
     // baki array ko process karo
     // step 1 : remove the out of winodw elements 
@@ -102,7 +102,6 @@ int main() {
             dq.pop_back();
         }
         dq.push_back(i);
-
         //    current window ka store karna hia 
         ans.push_back(nums[dq.front()]);
 
