@@ -5,50 +5,37 @@
 #include<queue>
 using namespace std;
 int main() {
-    string s="abbaca";
+    vector<int> temp{73,74,75};
+    stack<int>st;
+    int one=1;
+    int zero=0;
 
-    cout<<"printing string "<<endl;
+    vector<int>ans;
+
+    for(int i=0;i<temp.size();i++){
+        int t=temp[i];
+        int top=st.top();
+
+        if(st.empty()){
+            st.push(t);
+        }
+
+        else if (!st.empty() && t>top){
+            ans.push_back(one);
+            st.pop();
+            st.push(t);
+        }
+        else{
+            ans.push_back(zero);
+        }
+
+    }
 
 
-    for(int i=0;i<s.length();i++){
-        cout<<s[i]<<" ";
+    cout<<" Printing answer vecotr"<<endl;
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
     }
     cout<<endl;
-
-
-    string ans;
-    stack<char>st;
-
-    for(int i=0;i<s.length();i++){
-            char ch=s[i];
-
-            char top=st.top();
-
-            if(top!=ch){
-                st.push(ch);
-
-            }
-            else if(top==ch){
-                st.pop();
-            }
-            
-
-        }
-
-        cout<<"printing ans string "<<endl;
-
-        for(int i=0;i<s.length();i++){
-            ans[i]=st.top();
-            st.pop();
-        }
-         cout<<endl;
-
-
-
-
-
  return 0;
 }
-
-
-
