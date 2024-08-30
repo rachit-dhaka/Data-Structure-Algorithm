@@ -1,4 +1,4 @@
-#include<iostream>
+a#include<iostream>
 #include<vector>
 #include<string.h>
 #include<stack>
@@ -52,7 +52,7 @@ bool kAncestor(Node* root,int& k,int& p){
         return false;
     
     if(root->data == p)
-        return true; 
+        return true;  
      
     bool left=kAncestor(root->left,k,p);
     bool right=kAncestor(root->right,k,p);
