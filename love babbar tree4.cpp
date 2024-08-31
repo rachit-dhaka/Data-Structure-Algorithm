@@ -46,24 +46,28 @@ Node* buildTreeFromPreOrderInOrder(int inorder[], int preorder[], int size, int 
         return root;
 }  
 
-Node* buildTreeFromPostOrderandInOrder(int inorder[] , int postorder[] , int& postIndex , int size , int inorderStart , int inorderEnd){
+Node* buildTreeFromPostOrderInOrder(int inorder[], int postorder[], int &postIndex, int size, 
+int inorderStart, int inorderEnd, unordered_map<int,int> &mapping) {
+        //basecase
+        if(postIndex < 0 || inorderStart > inorderEnd) {
+                return NULL;
+        }
 
-    // base case
-    if(postIndex < 0 || inorderStart > inorderEnd) return NULL;
+        //A
+        int element = postorder[postIndex];
+        postIndex--;
+        Node* root = new Node(element);
 
-    // A
-    int element = postorder[postIndex];
-    postIndex--;
-    Node* root= new Node(element);
+       // int pos = findPosition(inorder,size, element);
+        int pos = mapping[element];
+        //root->right solve
+        root->right = buildTreeFromPostOrderInOrder(inorder, postorder, postIndex, size, pos+1, inorderEnd, mapping);
 
-    int pos=findPosition(inorder,size,element);
+        //root->left solve
+        root->left = buildTreeFromPostOrderInOrder(inorder, postorder, postIndex, size, inorderStart, pos-1, mapping);
 
-    // root->right
-    root->right=    buildTreeFromPostOrderandInOrder (inorder,postorder,postIndex,size,pos+1,inorderEnd);
-    // root->left
-    root->left= buildTreeFromPostOrderandInOrder(inorder    ,postorder,postIndex,size,inorderStart,pos-1);
+        return root;
 
-    return root;
 
 }
 
@@ -110,43 +114,36 @@ void createMapping(unordered_map<int,int> & mapping, int inorder[], int n) {
 
 
 int main() {
-        
 
-        // INORDER AND PREORDER PRINT 
-
-        // int inorder[] = {40,20,50,10,60,30,70};
-        // int preorder[] = {10,20,40,50,30,60,70};
-        // int size = 7;
-        // int preIndex = 0;
-        // int inorderStart = 0;
-        // int inorderEnd = size-1;
-
-        // cout << "Building Tree: " << endl;
-        // Node* root = buildTreeFromPreOrderInOrder(inorder, preorder,size, preIndex, inorderStart, inorderEnd );
-
-        // cout<< endl << "Printing level order traversal " << endl;
-        // levelOrderTraversal(root);
-
-
-        // INORDER AND POSTORDER PRINTING 
-
-        int inorder[] = {40,20,10,50,30,60};
-        int postorder[] = {40,20,50,60,30,10};
-        int size = 6;
-        int postIndex = size-1;
+        int inorder[] = {40,20,50,10,60,30,70};
+        int preorder[] = {10,20,40,50,30,60,70};
+        int size = 7;
+        int preIndex = 0;
         int inorderStart = 0;
         int inorderEnd = size-1;
+
+        cout << "Building Tree: " << endl;
+        Node* root = buildTreeFromPreOrderInOrder(inorder, preorder,size, preIndex, inorderStart, inorderEnd );
+
+        cout<< endl << "Printing level order traversal " << endl;
+        levelOrderTraversal(root);
+
+        // int inorder[] = {40,20,10,50,30,60};
+        // int postorder[] = {40,20,50,60,30,10};
+        // int size = 6;
+        // int postIndex = size-1;
+        // int inorderStart = 0;
+        // int inorderEnd = size-1;
 
         // unordered_map<int,int> mapping;
 
         // createMapping(mapping, inorder, size);
 
-        cout << "Building the tree: " << endl;
-        Node* root = buildTreeFromPostOrderandInOrder(inorder, postorder,postIndex,size, inorderStart, inorderEnd );
+        // cout << "Building the tree: " << endl;
+        // Node* root = buildTreeFromPostOrderInOrder(inorder, postorder,postIndex,size, inorderStart, inorderEnd, mapping);
 
-        cout << "Printing the tree " << endl;
-        levelOrderTraversal(root);
-        
+        // cout << "Printing the tree " << endl;
+        // levelOrderTraversal(root);
 
 
 
