@@ -141,8 +141,8 @@ int main() {
 
         // createMapping(mapping, inorder, size);
 
-        cout << "Building the tree: " << endl;
-        Node* root = buildTreeFromPostOrderandInOrder(inorder, postorder,postIndex,size, inorderStart, inorderEnd );
+        cout<<" Building tree "<<endl;
+        Node*root = buildTreeFromPostOrderandInOrder(inorder,  postorder ,postIndex,size,inorderStart,inorderEnd );
 
         cout << "Printing the tree " << endl;
         levelOrderTraversal(root);
