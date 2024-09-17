@@ -26,6 +26,8 @@ class node{
 
 };
 
+
+
 void print(node* &head){
     node* temp=head;
     while(temp!=NULL){

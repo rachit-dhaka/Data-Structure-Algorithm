@@ -1,6 +1,8 @@
-#include <iostream>
+#include<iostream>
+#include<vector>
+#include<string.h>
+#include<stack>
 #include<queue>
-#include<unordered_map>
 using namespace std;
 
 class Node{
@@ -25,86 +27,89 @@ int findPosition(int arr[], int n, int element) {
         return -1;
 }
 
-//build tree from inorder and preorder traversal
-Node* buildTreeFromPreOrderInOrder(int inorder[], int preorder[], int size, int &preIndex, int inorderStart, int inorderEnd) {
 
-        //base case
-        if(preIndex >= size || inorderStart > inorderEnd) {
-                return NULL;
-        }
-
-        //Step A:
-        int element = preorder[preIndex++];
-        Node* root = new Node(element);
-        int pos = findPosition(inorder, size, element);
-
-        //step B: root->left solve
-        root->left = buildTreeFromPreOrderInOrder(inorder, preorder, size, preIndex, inorderStart, pos-1);
-        //Step C: root->right solve
-        root->right = buildTreeFromPreOrderInOrder(inorder, preorder, size, preIndex, pos+1, inorderEnd);
-
-        return root;
-}  
-
-Node* buildTreeFromPostOrderandInOrder(int inorder[] , int postorder[] , int& postIndex , int size , int inorderStart , int inorderEnd){
+Node* buildTree(){
+    int data;
+    cout<<"enter the data :  "<<endl;
+    cin>>data;
 
     // base case
-    if(postIndex < 0 || inorderStart > inorderEnd) return NULL;
+    if(data==-1){
+        return NULL;
+    }
 
-    // A
-    int element = postorder[postIndex];
-    postIndex--;
-    Node* root= new Node(element);
+    // step A , B , C
+    Node* root=new Node(data);
+    cout<< "enter the data for left part of " << data<< " node "<< endl;
+    root -> left=buildTree();
 
-    int pos=findPosition(inorder,size,element);
 
-    // root->right
-    root->right=    buildTreeFromPostOrderandInOrder (inorder,postorder,postIndex,size,pos+1,inorderEnd);
-    // root->left
-    root->left= buildTreeFromPostOrderandInOrder(inorder    ,postorder,postIndex,size,inorderStart,pos-1);
+    cout<< "enter the data for right part of " << data<< " node "<< endl;
+    root -> right=buildTree();
 
     return root;
 
+
 }
 
-void levelOrderTraversal(Node* root ) {
-	queue<Node*> q;
-	//initially
-	q.push(root);
-	q.push(NULL);
 
-	while(!q.empty()) {
-		//A
-		Node* temp = q.front();
-		//B
-		q.pop();
-		
-		if(temp == NULL) {
-			cout << endl;
-			if(!q.empty()) {
-				q.push(NULL);
-			}	
-		}
-		else {
-			//C
-			cout << temp->data << " ";
-			//D
-			if(temp -> left) {
-				q.push(temp ->left);
-			}
-			if(temp ->right) {
-				q.push(temp->right);
-			}
-		}
-		
-		
-	}
-}
 
-void createMapping(unordered_map<int,int> & mapping, int inorder[], int n) {
-        for(int i=0; i<n; i++) {
-                mapping[inorder[i]] = i;
+void printLeftBoundary(Node* root){
+        // base case
+        if(root==NULL) return;
+        if(root->left ==NULL && root->right == NULL) return ;
+
+        cout<<root->data<<" ";
+        if(root->left !=NULL){
+                printLeftBoundary(root->left);
         }
+        else{
+               printLeftBoundary(root->right); 
+        }    
+}
+
+void LeafBoundary(Node* root){
+        if(root==NULL) return ;
+        if(root->left ==NULL && root->right == NULL)
+                cout<<root->data<<" ";
+        
+        LeafBoundary(root->left);
+        LeafBoundary(root->right);
+
+}
+
+void printRightBoundary(Node* root){
+        // Base case
+        if(root==NULL) return;
+        if(root->left ==NULL && root->right == NULL){
+                return;
+        }
+
+        // RC
+        if(root->right !=NULL){
+                printRightBoundary(root->right);
+        }
+        else{
+                printRightBoundary(root->left);
+        }
+
+        // BT
+        cout<<root->data<<" ";
+
+
+
+}
+
+void BoundaryTraversal(Node* root){
+        if(root==NULL) return ;
+        
+        cout<<root->data<<" ";
+        // left part
+        printLeftBoundary(root->left);
+        // Print Lead nodes
+        LeafBoundary(root);
+        // right side in reverse 
+        printRightBoundary(root->right);
 }
 
 
@@ -130,22 +135,26 @@ int main() {
 
         // INORDER AND POSTORDER PRINTING 
 
-        int inorder[] = {40,20,10,50,30,60};
-        int postorder[] = {40,20,50,60,30,10};
-        int size = 6;
-        int postIndex = size-1;
-        int inorderStart = 0;
-        int inorderEnd = size-1;
+        // int inorder[] = {40,20,10,50,30,60};
+        // int postorder[] = {40,20,50,60,30,10};
+        // int size = 6;
+        // int postIndex = size-1;
+        // int inorderStart = 0;
+        // int inorderEnd = size-1;
 
         // unordered_map<int,int> mapping;
 
         // createMapping(mapping, inorder, size);
 
-        cout<<" Building tree "<<endl;
-        Node*root = buildTreeFromPostOrderandInOrder(inorder,  postorder ,postIndex,size,inorderStart,inorderEnd );
+        // cout<<" Building tree "<<endl;
+        // Node*root = buildTreeFromPostOrderandInOrder(inorder,  postorder ,postIndex,size,inorderStart,inorderEnd );
 
-        cout << "Printing the tree " << endl;
-        levelOrderTraversal(root);
+        // cout << "Printing the tree " << endl;
+        // levelOrderTraversal(root);
+
+        Node* root=buildTree();
+        BoundaryTraversal(root);
+        
         
 
 
